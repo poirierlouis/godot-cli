@@ -1,9 +1,16 @@
 /// Defines environment configuration to build / run application.
 ///
-/// Add environment variable `FLAVOR=<value>` to select flavor to run application with.
+/// Add environment variable `FLAVOR=<value>` to select flavor of application to run with.
 ///
-/// Accepts TEST, DEV (default) and PROD.
-const String _kFlavor = String.fromEnvironment("FLAVOR", defaultValue: "DEV");
+/// *Note:* Dart VM while running tests does not support environment variables. Thus, FLAVOR default to TEST and any
+/// execution during development MUST declare `FLAVOR=DEV` using VM options `-D`:
+///
+/// ```shell
+/// $ dart -DFLAVOR=DEV run bin/gd.dart
+/// ```
+///
+/// Accepts TEST (default), DEV and PROD.
+const String _kFlavor = String.fromEnvironment("FLAVOR", defaultValue: "TEST");
 
 /// Whether application is running in test environment (used with `dart test`).
 const bool kTestMode = _kFlavor == "TEST";
