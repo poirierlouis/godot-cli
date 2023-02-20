@@ -4,7 +4,7 @@
 class SemVer {
   static final regexp = RegExp(r"[0-9]+\.[0-9]+\.[0-9]+");
 
-  const SemVer(this.major, this.minor, this.patch);
+  const SemVer(this.major, [this.minor = 0, this.patch = 0]);
 
   final int major;
   final int minor;
