@@ -40,7 +40,10 @@ class SemVer {
     } else if (deltaMinor > 0) {
       return true;
     }
-    return deltaPatch < 0;
+    if (deltaPatch < 0) {
+      return false;
+    }
+    return true;
   }
 
   bool operator <(SemVer other) {
