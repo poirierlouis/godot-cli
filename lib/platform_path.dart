@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:gd/platform_flavor.dart';
+
 final String sep = Platform.pathSeparator;
 
 const String _appDataName = "gd-cli";
@@ -12,7 +14,7 @@ Future<Directory> getAppData() async {
   final appData = Directory(path);
 
   if (!await appData.exists()) {
-    await appData.create();
+    await appData.create(recursive: !kReleaseMode);
   }
   return appData;
 }
@@ -32,13 +34,15 @@ String _getAppDataPath() {
 
 String _getHomePath() {
   final env = Platform.environment;
+  final cwd = Directory.current.path;
+  final path = (kTestMode) ? "$cwd${sep}test-fake" : "$cwd${sep}fake";
 
   if (Platform.isMacOS) {
-    return env["HOME"]!;
+    return (kReleaseMode) ? env["HOME"]! : path;
   } else if (Platform.isLinux) {
-    return env["HOME"]!;
+    return (kReleaseMode) ? env["HOME"]! : path;
   } else if (Platform.isWindows) {
-    return env["UserProfile"]!;
+    return (kReleaseMode) ? env["UserProfile"]! : path;
   }
   throw Error();
 }

@@ -5,3 +5,7 @@
 # Intellij IDEA
 .idea/
 *.iml
+
+# Directories used instead of OS app data when running in debug or test environment.
+fake/
+test-fake/
