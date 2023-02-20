@@ -16,10 +16,25 @@ class SemVer {
   }
 
   factory SemVer.parse(final String version) {
-    final first = version.indexOf(".");
-    final second = version.indexOf(".", first + 1);
+    int? first = version.indexOf(".");
+    int? second = version.indexOf(".", first + 1);
+
+    if (first == -1) {
+      first = null;
+    }
+    if (second == -1) {
+      second = null;
+    }
     final major = version.substring(0, first);
+
+    if (first == null) {
+      return SemVer(int.parse(major), 0, 0);
+    }
     final minor = version.substring(first + 1, second);
+
+    if (second == null) {
+      return SemVer(int.parse(major), int.parse(minor), 0);
+    }
     final patch = version.substring(second + 1);
 
     return SemVer(int.parse(major), int.parse(minor), int.parse(patch));
