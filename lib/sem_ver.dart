@@ -15,6 +15,9 @@ class SemVer {
     return "$major.$minor.$patch";
   }
 
+  /// Parses [version] to create a [SemVer]. Accepts format "X.Y.Z", "X.Y" and "X".
+  ///
+  /// Throws a [FormatException] when this is not a version number.
   factory SemVer.parse(final String version) {
     int? first = version.indexOf(".");
     int? second = version.indexOf(".", first + 1);
