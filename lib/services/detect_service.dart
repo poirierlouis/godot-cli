@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:gd/sem_ver.dart';
+import 'package:gd/services/app_service.dart';
 import 'package:gd/services/program_service.dart';
 
 /// Abstract service layer to detect a program is installed and well-configured.
 abstract class DetectService {
+  final AppService app = AppService.instance;
+
   String get executable;
   SemVer? get requiredVersion => null;
 
@@ -19,8 +22,10 @@ abstract class DetectService {
   Future<void> isInstalled({final List<String> arguments = const ["--version"]}) async {
     try {
       ProcessResult result = await ProgramService.run(executable, arguments);
+      String output = result.stdout as String;
 
-      _version = ProgramService.getVersion(result.stdout as String);
+      output += result.stderr as String;
+      _version = ProgramService.getVersion(output);
     } catch (_) {
       rethrow;
     }
