@@ -15,27 +15,19 @@ class TermColor {
   static int grey = 37;
 }
 
+/// Provides common functions to use ANSI escape sequences.
 class Terminal {
   static final String _loaders = "⣷⣯⣟⡿⢿⣻⣽⣾";
 
   static String get hideCursor => "\x1B[?25l";
   static String get showCursor => "\x1B[?25h";
 
-  static String get hideBlinking => "\x1B[?12l";
-  static String get showBlinking => "\x1B[?12h";
-
   static String get endAll => "\x1B[0m";
   static String get startOfLine => "\x1B[0F";
   static String get previousLine => "\x1B[1F";
-  static String get clearEndOfLine => "\x1B[0K";
-  static String get clearStartOfLine => "\x1B[1K";
   static String get clearLine => "\x1B[2K";
 
-  static String moveCursorUp(final int cells) => "\x1B[${cells}A";
-  static String moveCursorDown(final int cells) => "\x1B[${cells}B";
-  static String moveCursorForward(final int cells) => "\x1B[${cells}C";
-  static String moveCursorBack(final int cells) => "\x1B[${cells}D";
-
+  /// Clears [lines] from terminal, positioning the cursor at the beginning of the line.
   static void clearLines(final int lines) {
     String sequences = startOfLine;
 
@@ -45,6 +37,11 @@ class Terminal {
     print(sequences);
   }
 
+  /// Prints an infinite loader with [text] while [task] is executed.
+  ///
+  /// Returns result of [task] upon completion or `rethrow` when task throws an error.
+  ///
+  /// Optionally prints [padding] before loader's indicator.
   static Future<T> showInfiniteLoader<T>(
     final String text, {
     final String padding = "",
@@ -76,6 +73,9 @@ class Terminal {
     }
   }
 
+  /// Prints [text] and waits for user's input, accepting only [yes] or [no].
+  ///
+  /// Returns true when user's input equals [yes].
   static bool promptQuestion(final String text, {final String yes = "Y", final String no = "n"}) {
     stdout.write("$text ");
     String? answer = stdin.readLineSync(encoding: utf8);
@@ -84,12 +84,14 @@ class Terminal {
     return answer == yes;
   }
 
+  /// Prints [text] with [color]. Resets any Select Graphic Rendition sequences.
   static String text(final int color, final String text) {
     final startColor = "\x1B[${color}m";
 
     return "$startColor$text$endAll";
   }
 
+  /// Prints [text] in bold. Resets any Select Graphic Rendition sequences.
   static String bold(final String text) {
     final startBold = "\x1B[1m";
 
