@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:gd/platform_path.dart';
 import 'package:gd/services/detect_service.dart';
 
 abstract class GitError {
@@ -29,10 +30,17 @@ class GitService extends DetectService {
   GitService._();
 
   @override
-  final String executable = "git";
+  String get executable {
+    final path = app.getProgram("Git");
+
+    if (path == null) {
+      return "git";
+    }
+    return "$path${sep}git";
+  }
 
   Future<void> clone(final String repositoryUrl, {required final String path}) async {
-    ProcessResult result = await Process.run("git", ["clone", repositoryUrl, path], stderrEncoding: utf8);
+    ProcessResult result = await Process.run(executable, ["clone", repositoryUrl, path], stderrEncoding: utf8);
 
     if (result.exitCode != 0) {
       throw GitCloneError(result.stderr);
@@ -40,7 +48,12 @@ class GitService extends DetectService {
   }
 
   Future<void> checkout(final String commit, {required final String path}) async {
-    ProcessResult result = await Process.run("git", ["checkout", commit], workingDirectory: path, stderrEncoding: utf8);
+    ProcessResult result = await Process.run(
+      executable,
+      ["checkout", commit],
+      workingDirectory: path,
+      stderrEncoding: utf8,
+    );
 
     if (result.exitCode != 0) {
       throw GitCheckoutError(result.stderr);
@@ -48,7 +61,7 @@ class GitService extends DetectService {
   }
 
   Future<void> reverseCheckout(final String path) async {
-    ProcessResult result = await Process.run("git", ["switch", "-"], workingDirectory: path, stderrEncoding: utf8);
+    ProcessResult result = await Process.run(executable, ["switch", "-"], workingDirectory: path, stderrEncoding: utf8);
 
     if (result.exitCode != 0) {
       throw GitReverseCheckoutError(result.stderr);

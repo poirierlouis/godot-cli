@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:gd/platform_path.dart';
 import 'package:gd/sem_ver.dart';
 import 'package:gd/services/detect_service.dart';
 import 'package:gd/terminal.dart';
@@ -41,7 +42,23 @@ class PythonService extends DetectService {
   PythonService._();
 
   @override
-  final String executable = "python";
+  String get executable {
+    final path = app.getProgram("Python");
+
+    if (path == null) {
+      return "python";
+    }
+    return "$path${sep}python";
+  }
+
+  String get pip {
+    final path = app.getProgram("Python");
+
+    if (path == null) {
+      return "pip";
+    }
+    return "$path${sep}Scripts${sep}pip";
+  }
 
   @override
   final SemVer? requiredVersion = SemVer(3, 6, 0);
@@ -123,9 +140,9 @@ class PythonService extends DetectService {
     ProcessResult result;
 
     try {
-      result = await Process.run("pip", ["show", package.packageName], stdoutEncoding: utf8);
+      result = await Process.run(pip, ["show", package.packageName], stdoutEncoding: utf8);
       if (result.exitCode != 0) {
-        throw ProcessException("pip", ["show", package.packageName]);
+        throw ProcessException(pip, ["show", package.packageName]);
       }
     } on ProcessException {
       throw PackageNotFound();
@@ -146,7 +163,7 @@ class PythonService extends DetectService {
   ///
   /// Throws a [PackageInstallFailure] when installation failed.
   Future<void> installPackage(final PythonPackage package) async {
-    final result = await Process.run("pip", ["install", package.packageName], stderrEncoding: utf8);
+    final result = await Process.run(pip, ["install", package.packageName], stderrEncoding: utf8);
 
     if (result.exitCode != 0) {
       throw PackageInstallFailure(result.stderr as String);
@@ -156,7 +173,7 @@ class PythonService extends DetectService {
   /// Whether [package] can be updated?
   Future<bool> hasPackageUpdate(final PythonPackage package) async {
     try {
-      final result = await Process.run("pip", ["list", "--outdated"], stdoutEncoding: utf8);
+      final result = await Process.run(pip, ["list", "--outdated"], stdoutEncoding: utf8);
 
       if (result.exitCode != 0) {
         return false;
@@ -174,7 +191,7 @@ class PythonService extends DetectService {
   ///
   /// Throws a [PackageUpdateFailure] when update failed.
   Future<void> updatePackage(final PythonPackage package) async {
-    final result = await Process.run("pip", ["install", "--upgrade", package.packageName], stderrEncoding: utf8);
+    final result = await Process.run(pip, ["install", "--upgrade", package.packageName], stderrEncoding: utf8);
 
     if (result.exitCode != 0) {
       throw PackageUpdateFailure(result.stderr as String);
