@@ -51,7 +51,7 @@ class Terminal {
     int i = 0;
 
     stdout.write(hideCursor);
-    Future.doWhile(() async {
+    final loader = Future.doWhile(() async {
       String loader = _loaders[i];
 
       stdout.write("\r$padding ${loader.blue}  $text");
@@ -60,14 +60,17 @@ class Terminal {
       i %= _loaders.length;
       return !completer.isCompleted;
     });
+
     try {
       final result = await task;
 
       completer.complete();
+      await loader;
       print(showCursor);
       return result;
     } catch (_) {
       completer.complete();
+      await loader;
       print(showCursor);
       rethrow;
     }
