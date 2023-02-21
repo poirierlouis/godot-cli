@@ -23,6 +23,7 @@ class DoctorUi {
   void printInstallHelp() {
     print("    ${"·".red} ${"Install $programTitle manually from $installUrl.".bold}");
     print("    ${"·".red} ${"You might need to add path to the binary in your PATH environment variable.".bold}");
+    print("    ${"·".red} ${"Or you can use \"gd config\" to configure a custom path.".bold}");
     for (final help in installHelp) {
       print("    ${"·".red} ${help.bold}");
     }
@@ -35,6 +36,10 @@ class DoctorUi {
   void printRequiredVersion(final SemVer version, final SemVer requiredVersion) {
     stderr.writeln("${"[X]".red} $programTitle ($version)");
     stderr.writeln("    ${"·".red} ${"Requires v$requiredVersion or higher, please update manually.".bold}");
+  }
+
+  void printFixPath(final String path) {
+    stderr.writeln("    ${"·".red} ${"Note that a custom path is set ($path).".bold}");
   }
 
   void printDetected(final SemVer version) {

@@ -71,6 +71,11 @@ class WindowsDoctorCommand extends DoctorCommand {
 
       if (!service.hasRequiredVersion()) {
         ui.printRequiredVersion(service.version!, service.requiredVersion!);
+        final path = app.getProgram(program.programTitle);
+
+        if (path != null) {
+          ui.printFixPath(path);
+        }
         return false;
       }
       ui.printDetected(service.version!);
