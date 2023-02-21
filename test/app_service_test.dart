@@ -68,6 +68,46 @@ void main() {
       expect(json["issues"], 4);
     });
 
+    test(".getProgram('Git') while program is not defined should return <null>.", () async {
+      final path = app.getProgram("Git");
+
+      expect(path, null);
+    });
+
+    test(".defineProgram('Git', '/home/git/') should set program, path and update 'config.json'.", () async {
+      await app.defineProgram("Git", "/home/git");
+
+      final path = app.getProgram("Git");
+
+      expect(path, "/home/git");
+      final data = await config.readAsString();
+      final json = jsonDecode(data);
+      final programs = Map<String, String>.from(json["programs"]);
+
+      expect(programs["git"], "/home/git");
+    });
+
+    test(".removeProgram('Git') while program is set should remove entry, return true and update 'config.json'.",
+        () async {
+      final isRemoved = await app.removeProgram("Git");
+
+      expect(isRemoved, true);
+      final path = app.getProgram("Git");
+
+      expect(path, null);
+      final data = await config.readAsString();
+      final json = jsonDecode(data);
+      final programs = Map<String, String>.from(json["programs"]);
+
+      expect(programs["git"], null);
+    });
+
+    test(".removeProgram('Git') while program is not set should return false.", () async {
+      final isRemoved = await app.removeProgram("Git");
+
+      expect(isRemoved, false);
+    });
+
     test(".load() subsequent call return previous state from 'config.json'.", () async {
       await app.load();
 

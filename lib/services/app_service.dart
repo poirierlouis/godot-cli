@@ -33,6 +33,30 @@ class AppService {
     return _saveConfig(config);
   }
 
+  /// Gets [path] directory where to find binary of [program].
+  String? getProgram(final String program) {
+    return config.programs[program.toLowerCase()];
+  }
+
+  /// Sets [path] directory where to find binary of [program].
+  Future<void> defineProgram(final String program, final String path) async {
+    config.programs[program.toLowerCase()] = path;
+    await _saveConfig(config);
+  }
+
+  /// Removes [path] directory of [program].
+  ///
+  /// Returns true when [program] existed and is now removed.
+  Future<bool> removeProgram(final String program) async {
+    final path = config.programs.remove(program.toLowerCase());
+
+    if (path == null) {
+      return false;
+    }
+    await _saveConfig(config);
+    return true;
+  }
+
   Future<void> _saveConfig(final Config config) async {
     final file = File("${appData.path}${sep}config.json");
     final json = jsonEncode(config.toJson());
