@@ -50,33 +50,36 @@ class PythonService extends DetectService {
 
   @override
   Future<bool> delegate(final List<dynamic> data) async {
-    var loading = Completer<void>();
     final packages = data.cast<PythonPackage>();
     int issues = 0;
 
     for (final package in packages) {
       ui.withPackage(package);
 
-      Terminal.showInfiniteLoader(loading, ui.detecting(), "    ");
       try {
-        final version = await detectPackage(package);
+        final version = await Terminal.showInfiniteLoader(
+          ui.detecting(),
+          padding: "    ",
+          task: detectPackage(package),
+        );
 
-        loading.complete();
         Terminal.clearLines(1);
         ui.printDetected(version);
 
-        loading = Completer();
         Terminal.clearLines(1);
-        Terminal.showInfiniteLoader(loading, ui.checkingUpdate(), "    ");
-        final hasUpdate = await hasPackageUpdate(package);
+        final hasUpdate = await Terminal.showInfiniteLoader(
+          ui.checkingUpdate(),
+          padding: "    ",
+          task: hasPackageUpdate(package),
+        );
 
-        loading.complete();
         if (hasUpdate) {
-          loading = Completer();
           Terminal.clearLines(1);
-          Terminal.showInfiniteLoader(loading, ui.updating(), "    ");
-          await updatePackage(package);
-          loading.complete();
+          await Terminal.showInfiniteLoader(
+            ui.updating(),
+            padding: "    ",
+            task: updatePackage(package),
+          );
           Terminal.clearLines(1);
           ui.printUpdated();
         } else {
@@ -84,26 +87,23 @@ class PythonService extends DetectService {
           ui.printDetected(version);
         }
       } on PackageMissingSemVer {
-        loading.complete();
         Terminal.clearLines(1);
         ui.printMissingSemVer();
       } on PackageUpdateFailure catch (error) {
-        loading.complete();
         Terminal.clearLines(1);
         ui.printUpdateFailure(error);
       } on PackageNotFound {
-        loading.complete();
-        loading = Completer();
         Terminal.clearLines(1);
-        Terminal.showInfiniteLoader(loading, ui.installing(), "    ");
+
         try {
-          await Future.delayed(const Duration(seconds: 5));
-          await installPackage(package);
-          loading.complete();
+          await Terminal.showInfiniteLoader(
+            ui.installing(),
+            padding: "    ",
+            task: installPackage(package),
+          );
           Terminal.clearLines(1);
           ui.printInstalled();
         } on PackageInstallFailure catch (error) {
-          loading.complete();
           ui.printNotFound();
           ui.printInstallFailure(error);
           issues++;

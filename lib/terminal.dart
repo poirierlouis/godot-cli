@@ -45,22 +45,35 @@ class Terminal {
     print(sequences);
   }
 
-  static void showInfiniteLoader(Completer<void> task, String? text, [String? padding = ""]) {
+  static Future<T> showInfiniteLoader<T>(
+    final String text, {
+    final String padding = "",
+    required final Future<T> task,
+  }) async {
+    final Completer<void> completer = Completer();
     int i = 0;
 
-    text ??= "";
-    padding ??= "";
-    print("$padding ${_loaders[0].blue}  $text$hideCursor");
+    stdout.write(hideCursor);
     Future.doWhile(() async {
       String loader = _loaders[i];
 
-      print("$startOfLine$padding ${loader.blue}");
+      stdout.write("\r$padding ${loader.blue}  $text");
       await Future.delayed(const Duration(milliseconds: 200));
       i++;
       i %= _loaders.length;
-      return !task.isCompleted;
+      return !completer.isCompleted;
     });
-    print("$showCursor$previousLine");
+    try {
+      final result = await task;
+
+      completer.complete();
+      print(showCursor);
+      return result;
+    } catch (_) {
+      completer.complete();
+      print(showCursor);
+      rethrow;
+    }
   }
 
   static bool promptQuestion(final String text, {final String yes = "Y", final String no = "n"}) {
