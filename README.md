@@ -8,11 +8,22 @@ A command line interface to setup your environment to work with Godot sources an
 
 ## Features
 
+This tool is inspired by `flutter doctor` which helps Flutter developers to configure their workspace. This tool should
+provide a similar experience to improve and ease the creation of GDExtension with Godot.
+
 - Test that your system is well-configured to compile sources.
 - Install Godot sources.
 - Build Godot sources.
-- Create a GDExtension from an example template.
-- ...
+- Create a GDExtension from a minimal C++ template.
+
+## Roadmap
+
+- add detection to build on Android
+- add detection to build on iOS
+- add detection to build on Web
+- add support for Linux
+- add support for macOS
+- add tests
 
 ## Getting started
 
@@ -20,14 +31,46 @@ A command line interface to setup your environment to work with Godot sources an
 - Extract binary somewhere on your system.
 - Add path to the binary in your PATH environment variable.
 
-You can prepare your environment using this command:
+This tool stores data in:
+```
+Windows: %APPDATA%\Roaming\gd-cli
+```
+
+## Usage
+
+> Run commands in a terminal as Administrator / root.
+
+Start with this command to setup your workspace:
 ```shell
 $ gd doctor
 ```
 
-> You must run this command without any issues in order to use all other features.
+Once everything is well-configured (no issues), you can install a version of [godotengine/godot-cpp] (here v4.0-rc3).
+This will take sometime to download repository and build sources.
 
-## Usage
+```shell
+$ gd install --target 7e79aead99a53ee7cdf383add9a6a2aea4f15beb
+```
+> **Note:** this commit is known from the official blog article for the release of the [v4.0-rc3].
+
+Now you are ready to generate a GDExtension with:
+
+```shell
+$ gd create --name awesome --output gd-extensions/
+```
+
+Move into `gd-extensions/awesome/` and build your extension with:
+
+```shell
+$ scons target=template_debug
+```
+> **Note:** something like `gd build` from the GDExtension directory might be implemented in the future.
+
+You can copy the `bin/` directory along with the `awesome.gdextension` to your Godot project and use your GDExtension.
+
+See more about each commands below.
+
+## Commands
 
 ### help command
 
@@ -156,3 +199,4 @@ folder/
 [c1ff169bf]: https://github.com/godotengine/godot/commit/c1ff169bf3ad5f13457eda7cd5a424b894adbb05
 
 [articles]: https://godotengine.org/blog/
+[v4.0-rc3]: https://godotengine.org/article/release-candidate-godot-4-0-rc-3/
