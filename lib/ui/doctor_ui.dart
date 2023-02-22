@@ -21,11 +21,12 @@ class DoctorUi {
   }
 
   void printInstallHelp() {
-    print("    ${"·".red} ${"Install $programTitle manually from $installUrl.".bold}");
-    print("    ${"·".red} ${"You might need to add path to the binary in your PATH environment variable.".bold}");
-    print("    ${"·".red} ${"Or you can use \"gd config\" to configure a custom path.".bold}");
+    stderr.writeln("    ${"·".red} ${"Install $programTitle manually from $installUrl.".bold}");
+    stderr.writeln(
+        "    ${"·".red} ${"You might need to add path to the binary in your PATH environment variable.".bold}");
+    stderr.writeln("    ${"·".red} ${"Or you can use \"gd config\" to configure a custom path.".bold}");
     for (final help in installHelp) {
-      print("    ${"·".red} ${help.bold}");
+      stderr.writeln("    ${"·".red} ${help.bold}");
     }
   }
 
