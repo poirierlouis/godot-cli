@@ -15,6 +15,7 @@ class AppService {
   late File _configFile;
 
   Directory get appData => _appData;
+  Directory get godotCpp => Directory(p.join(_appData.path, "godot-cpp"));
   Config get config => _config;
 
   /// Loads configuration's data of [this] application.
