@@ -9,6 +9,11 @@
 /// $ dart -DFLAVOR=DEV run bin/gd.dart
 /// ```
 ///
+/// Option must be at the end of the command when compiling:
+/// ```shell
+/// $ dart compile exe bin/gd.dart -DFLAVOR=PROD
+/// ```
+///
 /// Accepts TEST (default), DEV and PROD.
 const String _kFlavor = String.fromEnvironment("FLAVOR", defaultValue: "TEST");
 
