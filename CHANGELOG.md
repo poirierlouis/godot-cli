@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - command 'doctor' on Windows to detect required tools.
 - command 'config' on Windows to configure custom path instead of PATH environment variable.
 - command 'install' to setup repository 'godot-cpp' and build sources.
+- command 'create' to generate a GDExtension using a minimal C++ template.
 
 ------------------------
 
