@@ -100,9 +100,57 @@ Below is the command you can run instead using the previous example:
 $ gd install --target 7e79aead99a53ee7cdf383add9a6a2aea4f15beb
 ```
 
+### create command
+
+```shell
+$ gd create --name <library-name> --output <path-output>
+```
+
+It will generate a GDExtension with a minimal C++ template. It will create the directory `<library-name>` inside the 
+path `<path-output>` for you.
+
+This template is based on [godotengine/godot-cpp/test] with less code. It has the advantage of renaming declarations
+with `<library-name>` for you.
+
+Here is an example of the output after running this command:
+
+```shell
+$ gd create --name awesome --output folder/
+```
+
+```
+folder/
+└── awesome/
+    ├── src/
+    │   ├── register_types.cpp
+    │   ├── register_types.h
+    │   ├── awesome.cpp
+    │   └── awesome.h
+    ├── .gitignore
+    ├── CMakeLists.txt
+    ├── SConstruct
+    └── awesome.gdextension
+```
+
+This will include the following declaration:
+- an `Awesome` Godot class inheriting from `Object`.
+- `initialize_awesome_module` and `uninitialize_awesome_module`
+- declaration of the file `.gdextension`.
+
+It will output the binaries in the `bin/` directory:
+
+```
+folder/
+└── awesome/
+    ├── bin/
+    │   └── libgdawesome.[os].[target].[arch].[ext]
+    └── ...
+```
+
 <!-- Table of links -->
 [godotengine/godot-cpp]: https://github.com/godotengine/godot-cpp
 [godotengine/godot]: https://github.com/godotengine/godot
+[godotengine/godot-cpp/test]: https://github.com/godotengine/godot-cpp/tree/master/test
 
 [7e79aead9]: https://github.com/godotengine/godot/commit/7e79aead99a53ee7cdf383add9a6a2aea4f15beb
 [c1ff169bf]: https://github.com/godotengine/godot/commit/c1ff169bf3ad5f13457eda7cd5a424b894adbb05
