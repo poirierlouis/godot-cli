@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:gd/commands/create_command.dart';
 import 'package:gd/commands/install_command.dart';
 import 'package:gd/commands/windows/windows_runner.dart';
 import 'package:gd/ui/core_ui.dart';
@@ -13,7 +14,9 @@ Future<CommandRunner> createRunner(final CoreUi ui) {
     suggestionDistanceLimit: 1,
   );
 
-  runner.addCommand(InstallCommand(ui));
+  runner
+    ..addCommand(InstallCommand(ui))
+    ..addCommand(CreateCommand(ui));
   if (Platform.isWindows) {
     return createWindowsRunner(ui, runner);
   }
