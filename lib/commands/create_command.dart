@@ -4,6 +4,7 @@ import 'package:args/args.dart';
 import 'package:gd/commands/guard_command.dart';
 import 'package:gd/services/gdtemplate_service.dart';
 import 'package:gd/ui/core_ui.dart';
+import 'package:path/path.dart' as p;
 
 class CreateCommand extends GuardCommand {
   CreateCommand(final CoreUi ui) : super(ui) {
@@ -39,12 +40,13 @@ class CreateCommand extends GuardCommand {
     }
     String name = argResults!["name"] as String;
     final path = argResults!["output"] as String;
-    final output = Directory(path);
 
     if (name.isEmpty) {
       return;
     }
     name = name.toLowerCase();
+    final output = Directory(p.join(path, name));
+
     await templateBuilder.generateLibrary(output: output, libraryName: name);
   }
 }

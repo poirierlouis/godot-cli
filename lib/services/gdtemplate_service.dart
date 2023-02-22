@@ -43,7 +43,6 @@ class GDTemplateService {
   Future<void> generateLibrary({required final Directory output, required final String libraryName}) async {
     if (!await output.exists()) {
       await output.create();
-      return;
     }
     final src = Directory(p.join(output.path, "src"));
 
