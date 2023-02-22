@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:gd/platform_path.dart';
 import 'package:gd/sem_ver.dart';
 import 'package:gd/services/detect_service.dart';
 import 'package:gd/terminal.dart';
 import 'package:gd/ui/python_ui.dart';
+import 'package:path/path.dart' as p;
 
 class PackageNotFound {}
 
@@ -48,7 +48,7 @@ class PythonService extends DetectService {
     if (path == null) {
       return "python";
     }
-    return "$path${sep}python";
+    return p.join(path, "python");
   }
 
   String get pip {
@@ -57,7 +57,7 @@ class PythonService extends DetectService {
     if (path == null) {
       return "pip";
     }
-    return "$path${sep}Scripts${sep}pip";
+    return p.join(path, "Scripts", "pip");
   }
 
   @override

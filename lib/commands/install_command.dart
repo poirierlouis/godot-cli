@@ -9,6 +9,7 @@ import 'package:gd/services/scons_service.dart';
 import 'package:gd/terminal.dart';
 import 'package:gd/ui/core_ui.dart';
 import 'package:gd/ui/install_ui.dart';
+import 'package:path/path.dart' as p;
 
 class Repository {
   const Repository({required this.user, required this.name});
@@ -69,7 +70,7 @@ class InstallCommand extends GuardCommand {
     final target = argResults!["target"] as String;
     final mode = argResults!["mode"] as String;
     final repository = godotEngineGodotCpp;
-    final destination = Directory("${appData.path}${sep}godot-cpp");
+    final destination = Directory(p.join(appData.path, "godot-cpp"));
     final hasRepository = await destination.exists();
     bool isHeadDetached = false;
 
@@ -92,7 +93,7 @@ class InstallCommand extends GuardCommand {
       await build(destination, mode);
       ui.withRepository(godotEngineGodotCppTest);
       if (Terminal.promptQuestion("${"[?]".blue} ${"Do you want to compile /test directory (Y/n):".bold}")) {
-        await build(Directory("${destination.path}${sep}test"), mode);
+        await build(Directory(p.join(destination.path, "test")), mode);
       } else {
         Terminal.clearLines(1);
         ui.printIgnored();

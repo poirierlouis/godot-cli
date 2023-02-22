@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:gd/platform_path.dart';
 import 'package:gd/services/detect_service.dart';
+import 'package:path/path.dart' as p;
 
 abstract class GitError {
   const GitError._(this.stderr);
@@ -50,7 +50,7 @@ class GitService extends DetectService {
     if (path == null) {
       return "git";
     }
-    return "$path${sep}git";
+    return p.join(path, "git");
   }
 
   /// Executes `git clone [url]`, optionally from [path] working directory.

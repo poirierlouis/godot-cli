@@ -3,14 +3,16 @@ import 'dart:io';
 
 import 'package:gd/config.dart';
 import 'package:gd/platform_path.dart';
+import 'package:path/path.dart' as p;
 
 class AppService {
   static final AppService instance = AppService._();
 
   AppService._();
 
-  Directory _appData = Directory("");
-  Config _config = Config.empty();
+  late Directory _appData;
+  late Config _config;
+  late File _configFile;
 
   Directory get appData => _appData;
   Config get config => _config;
@@ -18,6 +20,7 @@ class AppService {
   /// Loads configuration's data of [this] application.
   Future<void> load() async {
     _appData = await getAppData();
+    _configFile = File(p.join(_appData.path, "config.json"));
     _config = await _getConfig();
   }
 
@@ -58,23 +61,21 @@ class AppService {
   }
 
   Future<void> _saveConfig(final Config config) async {
-    final file = File("${appData.path}${sep}config.json");
     final json = jsonEncode(config.toJson());
 
-    await file.writeAsString(json);
+    await _configFile.writeAsString(json);
   }
 
   Future<Config> _getConfig() async {
-    final file = File("${appData.path}${sep}config.json");
     Config config = Config.empty();
 
-    if (!await file.exists()) {
+    if (!await _configFile.exists()) {
       final json = jsonEncode(config.toJson());
 
-      await file.create();
-      await file.writeAsString(json);
+      await _configFile.create();
+      await _configFile.writeAsString(json);
     } else {
-      final data = await file.readAsString();
+      final data = await _configFile.readAsString();
       final json = jsonDecode(data);
 
       config = Config.fromJson(json);

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:gd/platform_path.dart';
 import 'package:gd/services/app_service.dart';
+import 'package:path/path.dart' as p;
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
 
@@ -17,7 +18,7 @@ void main() {
       appData = await getAppData();
       await appData.delete(recursive: true);
 
-      config = File("${appData.path}${sep}config.json");
+      config = File(p.join(appData.path, "config.json"));
     });
 
     // Deletes application's data directory to release storage space.
