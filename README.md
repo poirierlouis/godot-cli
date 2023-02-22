@@ -6,6 +6,12 @@
 
 A command line interface to setup your environment to work with Godot sources and GDExtensions.
 
+> Not production ready (alpha stage).
+> 
+> It has only been tested and implemented for Windows (macOS and Linux shall be supported later).
+> 
+> It is not endorsed nor supported by Godot.
+
 ## Features
 
 This tool is inspired by `flutter doctor` which helps Flutter developers to configure their workspace. This tool should
