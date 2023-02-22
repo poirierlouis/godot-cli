@@ -18,8 +18,8 @@ This tool is inspired by `flutter doctor` which helps Flutter developers to conf
 provide a similar experience to improve and ease the creation of GDExtension with Godot.
 
 - Test that your system is well-configured to compile sources.
-- Install Godot sources.
-- Build Godot sources.
+- Install godot-cpp sources.
+- Build godot-cpp sources.
 - Create a GDExtension from a minimal C++ template.
 
 ## Roadmap
