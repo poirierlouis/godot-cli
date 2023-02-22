@@ -20,3 +20,9 @@ const bool kDebugMode = _kFlavor == "DEV";
 
 /// Whether application is running in production environment (used with `dart compile exe`).
 const bool kReleaseMode = _kFlavor == "PROD";
+
+/// Gets environment variable `GODOT_CLI_HOME` depending on environment such as:
+/// TEST: `GODOT_CLI_HOME_TEST`
+/// DEV:  `GODOT_CLI_HOME_DEV`
+/// PROD: `GODOT_CLI_HOME`
+const String kHome = kTestMode ? "GODOT_CLI_HOME_TEST" : (kDebugMode ? "GODOT_CLI_HOME_DEV" : "GODOT_CLI_HOME");

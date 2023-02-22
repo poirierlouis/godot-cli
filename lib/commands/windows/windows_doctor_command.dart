@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:gd/commands/doctor_command.dart';
 import 'package:gd/extensions/string_utils.dart';
+import 'package:gd/platform_flavor.dart';
 import 'package:gd/sem_ver.dart';
 import 'package:gd/services/detect_service.dart';
 import 'package:gd/services/git_service.dart';
@@ -38,6 +41,8 @@ class WindowsDoctorCommand extends DoctorCommand {
     if (argResults == null) {
       return;
     }
+    final isFirstRun = app.config.isFirstRun;
+
     if (app.config.isFirstRun) {
       await app.setFirstRun();
     }
@@ -47,6 +52,9 @@ class WindowsDoctorCommand extends DoctorCommand {
       if (!await detectProgram(program)) {
         issues++;
       }
+    }
+    if (!await detectHomeEnvironment(isFirstRun)) {
+      issues++;
     }
     await app.setIssues(issues);
     print("");
@@ -91,5 +99,30 @@ class WindowsDoctorCommand extends DoctorCommand {
       ui.printMissingSemVer();
     }
     return false;
+  }
+
+  /// Detects GODOT_CLI_HOME environment variable on user's system.
+  ///
+  /// Returns true when environment variable is detected and well-configured.
+  ///
+  /// Prints logs depending on detection result.
+  Future<bool> detectHomeEnvironment(final bool isFirstRun) async {
+    final appDataPath = app.appData.path;
+
+    if (isFirstRun) {
+      ui.printHomeEnvDisclaimer(appDataPath);
+      return false;
+    }
+    final home = Platform.environment[kHome];
+
+    if (home == null) {
+      ui.printHomeEnvNotFound(appDataPath);
+      return false;
+    } else if (home != appDataPath) {
+      ui.printWrongHomeEnv(appDataPath);
+      return false;
+    }
+    ui.printHomeEnvDetected(appDataPath);
+    return true;
   }
 }
