@@ -1,6 +1,6 @@
 # Godot CLI
 
-[![Version: 0.1.0](https://img.shields.io/github/v/release/poirierlouis/godot-cli?label=version&sort=semver)](https://github.com/poirierlouis/godot-cli/releases)
+[![Version: 0.1.1](https://img.shields.io/github/v/release/poirierlouis/godot-cli?label=version&sort=semver)](https://github.com/poirierlouis/godot-cli/releases)
 [![License: MIT](https://img.shields.io/github/license/poirierlouis/godot-cli)](https://github.com/poirierlouis/godot-cli/blob/master/LICENSE)
 ![Platform: windows](https://img.shields.io/badge/platform-windows-blue)
 [![Donate](https://img.shields.io/badge/donate-buy%20me%20a%20coffee-yellow)](https://www.buymeacoffee.com/lpfreelance)
