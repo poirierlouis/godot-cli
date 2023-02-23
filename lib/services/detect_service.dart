@@ -6,7 +6,8 @@ import 'package:gd/services/program_service.dart';
 
 /// Abstract service layer to detect a program is installed and well-configured.
 abstract class DetectService {
-  final AppService app = AppService.instance;
+  AppService get app => AppService.instance;
+  ProgramService get program => ProgramService.instance;
 
   String get executable;
   SemVer? get requiredVersion => null;
@@ -21,11 +22,11 @@ abstract class DetectService {
   /// Gets version number when it is installed, use [getVersion].
   Future<void> isInstalled({final List<String> arguments = const ["--version"]}) async {
     try {
-      ProcessResult result = await ProgramService.instance.run(executable, arguments);
+      ProcessResult result = await program.run(executable, arguments);
       String output = result.stdout as String;
 
       output += result.stderr as String;
-      _version = ProgramService.instance.getVersion(output);
+      _version = program.getVersion(output);
     } catch (_) {
       rethrow;
     }
