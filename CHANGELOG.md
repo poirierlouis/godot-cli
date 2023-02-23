@@ -5,14 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+------------------------
+
+## [0.1.0] - 2023-02-23
 ### Added
 - command 'doctor' on Windows to detect required tools.
 - command 'config' on Windows to configure custom path instead of PATH environment variable.
 - command 'install' to setup repository 'godot-cpp' and build sources.
 - command 'create' to generate a GDExtension using a minimal C++ template.
 - global option '--version' to show version number of this tool.
-
-------------------------
 
 <!-- New release template -->
 <!--
