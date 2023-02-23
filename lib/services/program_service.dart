@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:gd/sem_ver.dart';
+import 'package:meta/meta.dart';
 
 abstract class ProgramError {
   const ProgramError();
@@ -18,13 +19,21 @@ class ProgramFailure extends ProgramError {
 }
 
 class ProgramService {
+  static ProgramService get instance => _instance;
+  @visibleForTesting
+  static set instance(ProgramService value) => _instance = value;
+
+  static ProgramService _instance = ProgramService._();
+
+  ProgramService._();
+
   /// Runs [executable] in a [Process] with [arguments], optionally from [workingDirectory].
   ///
   /// Returns [ProcessResult] with stdout / stderr as String using UTF-8 encoding.
   ///
   /// Throws a [ProgramFailure] when [executable] stops with an error code (exitCode != 0).
   /// Throws a [ProgramNotFound] when [executable] is not found.
-  static Future<ProcessResult> run(
+  Future<ProcessResult> run(
     final String executable,
     final List<String> arguments, {
     final String? workingDirectory,
@@ -48,7 +57,7 @@ class ProgramService {
   }
 
   /// Gets [SemVer] from [content] expecting format "X.Y.Z".
-  static SemVer? getVersion(final String content) {
+  SemVer? getVersion(final String content) {
     final match = SemVer.regexp.stringMatch(content);
 
     if (match == null) {
