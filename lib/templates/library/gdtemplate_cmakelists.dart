@@ -1,3 +1,4 @@
+import 'package:gd/platform_flavor.dart';
 import 'package:gd/templates/gdtemplate_data.dart';
 import 'package:gd/templates/gdtemplate_file.dart';
 
@@ -14,8 +15,10 @@ class GDTemplateCMakeLists extends GDTemplateFile {
 project(${data.libraryName})
 cmake_minimum_required(VERSION 3.6)
 
-set(GODOT_GDEXTENSION_DIR ${data.gdExtensionDir} CACHE STRING "Path to GDExtension interface header directory")
-set(CPP_BINDINGS_PATH ${data.bindingsDir} CACHE STRING "Path to C++ bindings")
+set(GODOT_CLI_HOME "\$ENV{$kHome}")
+
+set(GODOT_GDEXTENSION_DIR "\${GODOT_CLI_HOME}/gdextension" CACHE STRING "Path to GDExtension interface header directory")
+set(CPP_BINDINGS_PATH "\${GODOT_CLI_HOME}" CACHE STRING "Path to C++ bindings")
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 	set(TARGET_PATH x11)

@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - output of error logs to stderr and warning logs to stdout.
 
+### Fixed
+- CMakeLists template file to define path using GODOT_CLI_HOME environment variable.
+
 ------------------------
 
 ## [0.1.0] - 2023-02-23
