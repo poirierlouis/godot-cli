@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:gd/commands/runner.dart';
 import 'package:gd/platform_admin.dart';
+import 'package:gd/platform_version.dart';
 import 'package:gd/services/app_service.dart';
 import 'package:gd/ui/core_ui.dart';
 
@@ -14,6 +15,9 @@ void main(List<String> arguments) async {
     final configService = AppService.instance;
     final runner = await createRunner(ui);
 
+    if (showVersion(runner, arguments)) {
+      return;
+    }
     await configService.load();
     await runner.run(arguments);
   } on UnimplementedError {
@@ -29,4 +33,17 @@ void main(List<String> arguments) async {
     stderr.writeln(error);
     exit(4);
   }
+}
+
+/// Show version number of this tool when global option '--version' is parsed.
+///
+/// Returns true when version number is showed.
+bool showVersion(final CommandRunner runner, final List<String> arguments) {
+  final version = arguments.firstWhere((arg) => arg == "--version", orElse: () => "");
+
+  if (version.isEmpty) {
+    return false;
+  }
+  print("godot-cli version $packageVersion");
+  return true;
 }

@@ -14,6 +14,11 @@ Future<CommandRunner> createRunner(final CoreUi ui) {
     suggestionDistanceLimit: 1,
   );
 
+  runner.argParser.addFlag(
+    "version",
+    help: "Show version number of this tool.",
+    negatable: false,
+  );
   runner
     ..addCommand(InstallCommand(ui))
     ..addCommand(CreateCommand(ui));
