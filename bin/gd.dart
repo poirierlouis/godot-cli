@@ -11,13 +11,13 @@ void main(List<String> arguments) async {
   final ui = CoreUi();
 
   try {
+    if (showVersion(arguments)) {
+      return;
+    }
     await isAdministrator();
     final configService = AppService.instance;
     final runner = await createRunner(ui);
 
-    if (showVersion(runner, arguments)) {
-      return;
-    }
     await configService.load();
     await runner.run(arguments);
   } on UnimplementedError {
@@ -38,7 +38,7 @@ void main(List<String> arguments) async {
 /// Show version number of this tool when global option '--version' is parsed.
 ///
 /// Returns true when version number is showed.
-bool showVersion(final CommandRunner runner, final List<String> arguments) {
+bool showVersion(final List<String> arguments) {
   final version = arguments.firstWhere((arg) => arg == "--version", orElse: () => "");
 
   if (version.isEmpty) {
