@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - output of error logs to stderr and warning logs to stdout.
 
 ### Fixed
-- CMakeLists template file to define path using GODOT_CLI_HOME environment variable.
+- template file CMakeLists to define path using GODOT_CLI_HOME environment variable.
+- template file SConstruct to always fix path with Windows-style.
 
 ------------------------
 
