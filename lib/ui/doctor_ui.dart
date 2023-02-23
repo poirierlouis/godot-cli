@@ -49,12 +49,10 @@ class DoctorUi {
 
   void printHomeEnvDisclaimer(final String appDataPath) {
     print("${"[!]".yellow} Environment variable");
-    stderr.writeln(
-        "    ${"·".yellow} ${"Instructions below allows you to work with Git when creating a GDExtension.".bold}");
-    stderr.writeln("    ${"·".yellow} ${"Add following environment variable on your system:".bold}");
-    stderr.writeln("    ${"·".yellow} ${"GODOT_CLI_HOME: $appDataPath".bold}");
-    stderr.writeln(
-        "    ${"·".yellow} ${"Make sure to re-run command 'doctor' after restarting your terminal / IDE.".bold}");
+    print("    ${"·".yellow} ${"Instructions below allows you to work with Git when creating a GDExtension.".bold}");
+    print("    ${"·".yellow} ${"Add following environment variable on your system:".bold}");
+    print("    ${"·".yellow} ${"GODOT_CLI_HOME: $appDataPath".bold}");
+    print("    ${"·".yellow} ${"Make sure to re-run command 'doctor' after restarting your terminal / IDE.".bold}");
   }
 
   void printHomeEnvNotFound(final String appDataPath) {
@@ -72,6 +70,6 @@ class DoctorUi {
   }
 
   void printHomeEnvDetected(final String appDataPath) {
-    stderr.writeln("${"[√]".green} Environment variable (GODOT_CLI_HOME)");
+    print("${"[√]".green} Environment variable (GODOT_CLI_HOME)");
   }
 }

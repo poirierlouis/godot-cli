@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:gd/commands/install_command.dart';
 import 'package:gd/extensions/string_utils.dart';
 import 'package:gd/services/git_service.dart';
@@ -70,37 +72,37 @@ class InstallUi {
   }
 
   void printCloningFailure(final GitCloneFailure error) {
-    print("${"[X]".red} Cloning ($name)");
-    print("    ${"·".red} ${"Failed to clone repository:".bold}");
-    print(error.stderr);
+    stderr.writeln("${"[X]".red} Cloning ($name)");
+    stderr.writeln("    ${"·".red} ${"Failed to clone repository:".bold}");
+    stderr.writeln(error.stderr);
   }
 
   void printRestoringFailure(final GitRestoreFailure error) {
-    print("${"[X]".red} Restoring ($name)");
-    print("    ${"·".red} ${"Failed to restore working tree of repository:".bold}");
-    print(error.stderr);
+    stderr.writeln("${"[X]".red} Restoring ($name)");
+    stderr.writeln("    ${"·".red} ${"Failed to restore working tree of repository:".bold}");
+    stderr.writeln(error.stderr);
   }
 
   void printPullingFailure(final GitPullFailure error) {
-    print("${"[X]".red} Pulling ($name)");
-    print("    ${"·".red} ${"Failed to pull repository:".bold}");
-    print(error.stderr);
+    stderr.writeln("${"[X]".red} Pulling ($name)");
+    stderr.writeln("    ${"·".red} ${"Failed to pull repository:".bold}");
+    stderr.writeln(error.stderr);
   }
 
   void printCheckingOutFailure(final String commit, final GitCheckoutFailure error) {
-    print("${"[X]".red} Checking out ($name)");
-    print("    ${"·".red} ${"Failed to checkout repository ($commit):".bold}");
-    print(error.stderr);
+    stderr.writeln("${"[X]".red} Checking out ($name)");
+    stderr.writeln("    ${"·".red} ${"Failed to checkout repository ($commit):".bold}");
+    stderr.writeln(error.stderr);
   }
 
   void printBuildingFailure(final BuildFailure error) {
-    print("${"[X]".red} Building ($name)");
-    print("    ${"·".red} ${"Failed to build with 'target=${error.target}':".bold}");
-    print(error.stderr);
+    stderr.writeln("${"[X]".red} Building ($name)");
+    stderr.writeln("    ${"·".red} ${"Failed to build with 'target=${error.target}':".bold}");
+    stderr.writeln(error.stderr);
   }
 
   void printCommitNotFound(final String commit) {
-    print("${"[X]".red} Searching commit ($name)");
-    print("    ${"·".red} ${"Failed to find synchronous upstream commit ($commit).".bold}");
+    stderr.writeln("${"[X]".red} Searching commit ($name)");
+    stderr.writeln("    ${"·".red} ${"Failed to find synchronous upstream commit ($commit).".bold}");
   }
 }
