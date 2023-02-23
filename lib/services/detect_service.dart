@@ -21,11 +21,11 @@ abstract class DetectService {
   /// Gets version number when it is installed, use [getVersion].
   Future<void> isInstalled({final List<String> arguments = const ["--version"]}) async {
     try {
-      ProcessResult result = await ProgramService.run(executable, arguments);
+      ProcessResult result = await ProgramService.instance.run(executable, arguments);
       String output = result.stdout as String;
 
       output += result.stderr as String;
-      _version = ProgramService.getVersion(output);
+      _version = ProgramService.instance.getVersion(output);
     } catch (_) {
       rethrow;
     }
