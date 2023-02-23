@@ -11,11 +11,12 @@ abstract class ProgramError {
 /// Throws when an executable is not found.
 class ProgramNotFound extends ProgramError {}
 
-/// Throws when an executable stops with an error code ([errno]).
+/// Throws when an executable stops with an error code and stderr.
 class ProgramFailure extends ProgramError {
-  const ProgramFailure(this.errno);
+  const ProgramFailure(this.errno, this.stderr);
 
   final int errno;
+  final String stderr;
 }
 
 class ProgramService {
@@ -48,7 +49,7 @@ class ProgramService {
       );
 
       if (result.exitCode != 0) {
-        throw ProgramFailure(result.exitCode);
+        throw ProgramFailure(result.exitCode, result.stderr);
       }
       return result;
     } on ProcessException {
