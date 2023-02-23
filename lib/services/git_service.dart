@@ -77,7 +77,6 @@ class GitService extends DetectService {
     );
 
     if (result.exitCode != 0) {
-      print(result.stderr as String);
       return false;
     }
     final output = result.stdout as String;
