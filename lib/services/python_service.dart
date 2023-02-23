@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:gd/sem_ver.dart';
 import 'package:gd/services/detect_service.dart';
+import 'package:gd/services/program_service.dart';
 import 'package:gd/terminal.dart';
 import 'package:gd/ui/python_ui.dart';
 import 'package:path/path.dart' as p;
@@ -137,24 +136,16 @@ class PythonService extends DetectService {
   /// Throws a [PackageNotFound] when package is not detected.
   /// Throws a [PackageMissingSemVer] when version number is unknown.
   Future<SemVer> detectPackage(final PythonPackage package) async {
-    ProcessResult result;
-
     try {
-      result = await Process.run(pip, ["show", package.packageName], stdoutEncoding: utf8);
-      if (result.exitCode != 0) {
-        throw ProcessException(pip, ["show", package.packageName]);
-      }
-    } on ProcessException {
-      throw PackageNotFound();
-    }
-    final output = (result.stdout as String).split("\n");
-
-    try {
+      final result = await program.run(pip, ["show", package.packageName]);
+      final output = (result.stdout as String).split("\n");
       final line = output.firstWhere((item) => item.startsWith("Version: ")).trim();
       final version = line.substring("Version: ".length).trim();
 
       return SemVer.parse(version);
-    } catch (error) {
+    } on ProgramFailure {
+      throw PackageNotFound();
+    } catch (_) {
       throw PackageMissingSemVer();
     }
   }
@@ -163,26 +154,22 @@ class PythonService extends DetectService {
   ///
   /// Throws a [PackageInstallFailure] when installation failed.
   Future<void> installPackage(final PythonPackage package) async {
-    final result = await Process.run(pip, ["install", package.packageName], stderrEncoding: utf8);
-
-    if (result.exitCode != 0) {
-      throw PackageInstallFailure(result.stderr as String);
+    try {
+      await program.run(pip, ["install", package.packageName]);
+    } on ProgramFailure catch (error) {
+      throw PackageInstallFailure(error.stderr);
     }
   }
 
   /// Whether [package] can be updated?
   Future<bool> hasPackageUpdate(final PythonPackage package) async {
     try {
-      final result = await Process.run(pip, ["list", "--outdated"], stdoutEncoding: utf8);
-
-      if (result.exitCode != 0) {
-        return false;
-      }
+      final result = await program.run(pip, ["list", "--outdated"]);
       final output = (result.stdout as String).split("\n");
       final packageLine = output.firstWhere((line) => line.startsWith(package.packageName), orElse: () => "");
 
       return packageLine.isNotEmpty;
-    } catch (_) {
+    } catch (error) {
       return false;
     }
   }
@@ -191,10 +178,10 @@ class PythonService extends DetectService {
   ///
   /// Throws a [PackageUpdateFailure] when update failed.
   Future<void> updatePackage(final PythonPackage package) async {
-    final result = await Process.run(pip, ["install", "--upgrade", package.packageName], stderrEncoding: utf8);
-
-    if (result.exitCode != 0) {
-      throw PackageUpdateFailure(result.stderr as String);
+    try {
+      await program.run(pip, ["install", "--upgrade", package.packageName]);
+    } on ProgramFailure catch (error) {
+      throw PackageUpdateFailure(error.stderr);
     }
   }
 }

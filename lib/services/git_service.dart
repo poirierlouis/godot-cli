@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:gd/services/detect_service.dart';
+import 'package:gd/services/program_service.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
@@ -62,10 +63,10 @@ class GitService extends DetectService {
   ///
   /// Throws a [GitCloneFailure] when cloning failed.
   Future<void> clone(final String url, {required final String path}) async {
-    ProcessResult result = await Process.run(executable, ["clone", url, path], stderrEncoding: utf8);
-
-    if (result.exitCode != 0) {
-      throw GitCloneFailure(result.stderr);
+    try {
+      await program.run(executable, ["clone", url, path]);
+    } on ProgramFailure catch (error) {
+      throw GitCloneFailure(error.stderr);
     }
   }
 
@@ -73,30 +74,24 @@ class GitService extends DetectService {
   ///
   /// Returns true when tree is clean.
   Future<bool> status(final String path) async {
-    ProcessResult result = await Process.run(
-      executable,
-      ["status"],
-      workingDirectory: path,
-      stdoutEncoding: utf8,
-      stderrEncoding: utf8,
-    );
+    try {
+      final result = await program.run(executable, ["status"], workingDirectory: path);
+      final output = result.stdout as String;
 
-    if (result.exitCode != 0) {
+      return output.contains("nothing to commit") && output.contains("working tree clean");
+    } catch (error) {
       return false;
     }
-    final output = result.stdout as String;
-
-    return output.contains("nothing to commit") && output.contains("working tree clean");
   }
 
   /// Executes `git pull` within [path] of repository.
   ///
   /// Throws a [GitPullFailure] when pulling failed.
   Future<void> pull(final String path) async {
-    ProcessResult result = await Process.run(executable, ["pull"], workingDirectory: path, stderrEncoding: utf8);
-
-    if (result.exitCode != 0) {
-      throw GitPullFailure(result.stderr);
+    try {
+      await program.run(executable, ["pull"], workingDirectory: path);
+    } on ProgramFailure catch (error) {
+      throw GitPullFailure(error.stderr);
     }
   }
 
@@ -104,15 +99,10 @@ class GitService extends DetectService {
   ///
   /// Throws a [GitCheckoutFailure] when checkout failed.
   Future<void> checkout(final String commit, {required final String path}) async {
-    ProcessResult result = await Process.run(
-      executable,
-      ["checkout", commit],
-      workingDirectory: path,
-      stderrEncoding: utf8,
-    );
-
-    if (result.exitCode != 0) {
-      throw GitCheckoutFailure(result.stderr);
+    try {
+      await program.run(executable, ["checkout", commit], workingDirectory: path);
+    } on ProgramFailure catch (error) {
+      throw GitCheckoutFailure(error.stderr);
     }
   }
 
@@ -120,10 +110,10 @@ class GitService extends DetectService {
   ///
   /// Throws a [GitReverseCheckoutFailure] when reverse checkout failed.
   Future<void> reverseCheckout(final String path) async {
-    ProcessResult result = await Process.run(executable, ["switch", "-"], workingDirectory: path, stderrEncoding: utf8);
-
-    if (result.exitCode != 0) {
-      throw GitReverseCheckoutFailure(result.stderr);
+    try {
+      await program.run(executable, ["switch", "-"], workingDirectory: path);
+    } on ProgramFailure catch (error) {
+      throw GitReverseCheckoutFailure(error.stderr);
     }
   }
 
@@ -131,11 +121,10 @@ class GitService extends DetectService {
   ///
   /// Throws a [GitRestoreFailure] when restore failed.
   Future<void> restore(final String path) async {
-    ProcessResult result =
-        await Process.run(executable, ["restore", "*"], workingDirectory: path, stderrEncoding: utf8);
-
-    if (result.exitCode != 0) {
-      throw GitRestoreFailure(result.stderr);
+    try {
+      await program.run(executable, ["restore", "*"], workingDirectory: path);
+    } on ProgramFailure catch (error) {
+      throw GitRestoreFailure(error.stderr);
     }
   }
 
