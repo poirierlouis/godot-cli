@@ -68,7 +68,13 @@ class GitService extends DetectService {
   ///
   /// Returns true when tree is clean.
   Future<bool> status(final String path) async {
-    ProcessResult result = await Process.run(executable, ["status", path], stdoutEncoding: utf8, stderrEncoding: utf8);
+    ProcessResult result = await Process.run(
+      executable,
+      ["status"],
+      workingDirectory: path,
+      stdoutEncoding: utf8,
+      stderrEncoding: utf8,
+    );
 
     if (result.exitCode != 0) {
       print(result.stderr as String);
