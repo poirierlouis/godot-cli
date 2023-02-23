@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:gd/services/detect_service.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 abstract class GitError {
@@ -39,7 +40,11 @@ class GitLogFailure extends GitError {
 }
 
 class GitService extends DetectService {
-  static final GitService instance = GitService._();
+  static GitService get instance => _instance;
+  @visibleForTesting
+  static set instance(GitService value) => _instance = value;
+
+  static GitService _instance = GitService._();
 
   GitService._();
 

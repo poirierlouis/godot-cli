@@ -3,10 +3,15 @@ import 'dart:io';
 
 import 'package:gd/config.dart';
 import 'package:gd/platform_path.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 class AppService {
-  static final AppService instance = AppService._();
+  static AppService get instance => _instance;
+  @visibleForTesting
+  static set instance(AppService value) => _instance = value;
+
+  static AppService _instance = AppService._();
 
   AppService._();
 
