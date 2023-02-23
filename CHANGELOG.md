@@ -40,8 +40,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -->
 
 <!-- Table of releases -->
-[Unreleased]: https://github.com/poirierlouis/godot_cli/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/poirierlouis/godot_cli/releases/tag/v0.1.0
+[Unreleased]: https://github.com/poirierlouis/godot-cli/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/poirierlouis/godot-cli/releases/tag/v0.1.0
 
 <!-- Table of issues -->
-<!-- [issue #1]: https://github.com/poirierlouis/godot_cli/issues/1 -->
+<!-- [issue #1]: https://github.com/poirierlouis/godot-cli/issues/1 -->

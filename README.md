@@ -1,7 +1,8 @@
 # Godot CLI
 
-![Platform Windows](https://img.shields.io/badge/platform-Windows-blue)
-[![License MIT](https://img.shields.io/github/license/poirierlouis/godot_cli)](https://github.com/poirierlouis/godot_cli/blob/master/LICENSE)
+[![Version: ](https://img.shields.io/github/v/release/poirierlouis/godot-cli?label=version)](https://github.com/poirierlouis/godot-cli/releases)
+[![License: MIT](https://img.shields.io/github/license/poirierlouis/godot-cli)](https://github.com/poirierlouis/godot-cli/blob/master/LICENSE)
+![Platform: windows](https://img.shields.io/badge/platform-windows-blue)
 [![Donate](https://img.shields.io/badge/donate-buy%20me%20a%20coffee-yellow)](https://www.buymeacoffee.com/lpfreelance)
 
 A command line interface to setup your environment to work with Godot sources and GDExtensions.
@@ -33,7 +34,7 @@ provide a similar experience to improve and ease the creation of GDExtension wit
 
 ## Getting started
 
-- Download the latest [release](https://github.com/poirierlouis/godot_cli/releases).
+- Download the latest [release](https://github.com/poirierlouis/godot-cli/releases).
 - Extract binary somewhere on your system.
 - Add path to the binary in your PATH environment variable.
 
