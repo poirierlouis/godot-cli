@@ -131,6 +131,9 @@ class GitService extends DetectService {
   /// filter logs on [file].
   ///
   /// Returns one-line message of commit when found. Timeout with a null return after 20 seconds.
+  ///
+  /// Throws a [ProgramNotFound] when [executable] is not found.
+  /// Throws a [GitLogFailure] when execution failed or [message] was not found in logs.
   Future<String?> findCommit(final String message, {required final String path, final String? file}) async {
     final List<String> arguments = [
       "log",
