@@ -130,9 +130,8 @@ class GitService extends DetectService {
   /// Finds line of a commit which starts with [message] or contains [message] within [path] of repository. Optionally
   /// filter logs on [file].
   ///
-  /// Returns one-line message of commit when found. Timeout with a null return after 20 seconds.
+  /// Returns one-line message of commit when found, null otherwise. Timeout after 20 seconds with null.
   ///
-  /// Throws a [ProgramNotFound] when [executable] is not found.
   /// Throws a [GitLogFailure] when execution failed or [message] was not found in logs.
   Future<String?> findCommit(final String message, {required final String path, final String? file}) async {
     final List<String> arguments = [
@@ -140,34 +139,39 @@ class GitService extends DetectService {
       "--pretty=oneline",
       if (file != null) ...["--", file],
     ];
-    final process = await program.start(executable, arguments, workingDirectory: path);
-    final output = process.stdout.transform(utf8.decoder).map((text) {
-      final lines = text.split("\n");
+    try {
+      final process = await program.start(executable, arguments, workingDirectory: path);
+      final output = process.stdout.transform(utf8.decoder).expand((text) {
+        final lines = text.split("\n");
 
-      return lines.where((line) => line.isNotEmpty);
-    });
-    String? commit;
+        return lines.where((line) => line.isNotEmpty);
+      });
+      final commit = await _findLineFromOutput(output, message);
 
-    await output.firstWhere((lines) {
-      for (final line in lines) {
+      process.kill();
+      if (commit == null && await process.exitCode != 0) {
+        final stderr = await process.stderr.join();
+
+        throw GitLogFailure(stderr);
+      }
+      return commit;
+    } on ProgramNotFound {
+      return null;
+    }
+  }
+
+  /// Gets line containing [message] from [output].
+  ///
+  /// Returns line when found, null otherwise. Timeout after 20 seconds with null.
+  Future<String?> _findLineFromOutput(final Stream<String> output, final String message) async {
+    try {
+      return await output.firstWhere((line) {
         final description = line.substring(line.indexOf(" ") + 1);
 
-        if (description.startsWith(message) || description.contains(message)) {
-          commit = line;
-          return true;
-        }
-      }
-      return false;
-    }).timeout(
-      const Duration(seconds: 20),
-      onTimeout: () => const Iterable.empty(),
-    );
-    process.kill();
-    if (commit == null && await process.exitCode != 0) {
-      final stderr = await process.stderr.join();
-
-      throw GitLogFailure(stderr);
+        return description.startsWith(message) || description.contains(message);
+      }).timeout(const Duration(seconds: 20));
+    } catch (error) {
+      return null;
     }
-    return commit;
   }
 }
