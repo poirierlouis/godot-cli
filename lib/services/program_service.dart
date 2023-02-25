@@ -57,6 +57,19 @@ class ProgramService {
     }
   }
 
+  /// Starts [executable] with [arguments], optionally from [workingDirectory].
+  ///
+  /// Returns a [Process] to interact with, when it has been successfully started.
+  ///
+  /// Throws a [ProgramNotFound] when [executable] is not found.
+  Future<Process> start(final String executable, final List<String> arguments, {final String? workingDirectory}) async {
+    try {
+      return await Process.start(executable, arguments, workingDirectory: workingDirectory);
+    } catch (error) {
+      throw ProgramNotFound();
+    }
+  }
+
   /// Gets [SemVer] from [content] expecting format "X.Y.Z".
   SemVer? getVersion(final String content) {
     final match = SemVer.regexp.stringMatch(content);

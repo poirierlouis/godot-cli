@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:gd/services/detect_service.dart';
 import 'package:gd/services/program_service.dart';
@@ -138,7 +137,7 @@ class GitService extends DetectService {
       "--pretty=oneline",
       if (file != null) ...["--", file],
     ];
-    final process = await Process.start(executable, arguments, workingDirectory: path);
+    final process = await program.start(executable, arguments, workingDirectory: path);
     final output = process.stdout.transform(utf8.decoder).map((text) {
       final lines = text.split("\n");
 
