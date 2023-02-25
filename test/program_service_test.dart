@@ -5,14 +5,14 @@ import 'package:test/scaffolding.dart';
 
 void main() {
   group("ProgramService", () {
-    test(".run('unknown-program', []) should throw ProgramNotFound", () async {
+    test(".run(executable) while executable does not exist should throw ProgramNotFound.", () async {
       await expectLater(
         ProgramService.instance.run("unknown-program", []),
         throwsA(const TypeMatcher<ProgramNotFound>()),
       );
     });
 
-    test(".run('dart', ['--unknown-command']) should throw ProgramFailure", () async {
+    test(".run(executable) while executable exits with an error code should throw ProgramFailure.", () async {
       await expectLater(
         ProgramService.instance.run("dart", ["--unknown-command"]),
         throwsA(const TypeMatcher<ProgramFailure>()),
@@ -32,6 +32,20 @@ void main() {
       final version = ProgramService.instance.getVersion(output);
 
       expect(version, SemVer(2, 19, 1));
+    });
+
+    test(".start(executable) while executable does not exist should throw ProgramNotFound.", () async {
+      await expectLater(
+        ProgramService.instance.start("unknown-program", ["--unknown-command"]),
+        throwsA(const TypeMatcher<ProgramNotFound>()),
+      );
+    });
+
+    test(".start(executable) while executable does exist should return Process and gracefully stop.", () async {
+      final process = await ProgramService.instance.start("dart", ["--version"]);
+      final exitCode = await process.exitCode;
+
+      expect(exitCode, 0);
     });
   });
 }
