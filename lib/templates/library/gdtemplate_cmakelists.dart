@@ -16,9 +16,10 @@ project(${data.libraryName})
 cmake_minimum_required(VERSION 3.6)
 
 set(GODOT_CLI_HOME "\$ENV{$kHome}")
+set(GODOT_CPP_DIR "\${GODOT_CLI_HOME}/godot-cpp")
 
-set(GODOT_GDEXTENSION_DIR "\${GODOT_CLI_HOME}/gdextension" CACHE STRING "Path to GDExtension interface header directory")
-set(CPP_BINDINGS_PATH "\${GODOT_CLI_HOME}" CACHE STRING "Path to C++ bindings")
+set(GODOT_GDEXTENSION_DIR "\${GODOT_CPP_DIR}/gdextension" CACHE STRING "Path to GDExtension interface header directory")
+set(CPP_BINDINGS_PATH "\${GODOT_CPP_DIR}" CACHE STRING "Path to C++ bindings")
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 	set(TARGET_PATH x11)
