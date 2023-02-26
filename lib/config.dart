@@ -27,7 +27,12 @@ class Config {
   }
 
   factory Config.empty() {
-    return Config(version: SemVer(1, 0, 0), programs: {}, isFirstRun: true, issues: -1);
+    return Config(
+      version: SemVer.parse(packageVersion),
+      programs: {},
+      isFirstRun: true,
+      issues: -1,
+    );
   }
 
   factory Config.fromJson(Map<String, dynamic> json) {
