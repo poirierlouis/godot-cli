@@ -11,10 +11,10 @@ void main(List<String> arguments) async {
   final ui = CoreUi();
 
   try {
-    if (showVersion(arguments)) {
-      return;
+    if (!await isAdministrator()) {
+      ui.printAccessDenied();
+      exit(2);
     }
-    await isAdministrator();
     final configService = AppService.instance;
     final runner = await createRunner(ui);
 
@@ -23,15 +23,12 @@ void main(List<String> arguments) async {
   } on UnimplementedError {
     ui.printUnimplementedOperatingSystem();
     exit(1);
-  } on AdministratorAccessDenied {
-    ui.printAccessDenied();
-    exit(2);
   } on UsageException catch (error) {
     stderr.writeln(error);
-    exit(3);
+    exit(2);
   } catch (error) {
     stderr.writeln(error);
-    exit(4);
+    exit(3);
   }
 }
 

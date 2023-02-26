@@ -1,11 +1,9 @@
 import 'dart:io';
 
-class AdministratorAccessDenied {}
-
 /// Whether session is running with Administrator access?
 ///
-/// Throws an [AdministratorAccessDenied] when running without access.
-Future<void> isAdministrator() {
+/// Throws an [UnimplementedError] when running on unsupported OS.
+Future<bool> isAdministrator() {
   if (Platform.isWindows) {
     return _isWindowsAdministrator();
   } else if (Platform.isLinux) {
@@ -14,24 +12,20 @@ Future<void> isAdministrator() {
   throw UnimplementedError();
 }
 
-Future<void> _isWindowsAdministrator() async {
+Future<bool> _isWindowsAdministrator() async {
   ProcessResult result = await Process.run("net", ["session"]);
 
-  if (result.exitCode != 0) {
-    throw AdministratorAccessDenied();
-  }
+  return result.exitCode == 0;
 }
 
-Future<void> _isLinuxAdministrator() async {
+Future<bool> _isLinuxAdministrator() async {
   ProcessResult result = await Process.run("id", ["-u"]);
 
   if (result.exitCode != 0) {
-    throw AdministratorAccessDenied();
+    return false;
   }
   final output = result.stdout as String;
   final id = int.tryParse(output.substring(0, output.indexOf("\n")));
 
-  if (id == null || id != 0) {
-    throw AdministratorAccessDenied();
-  }
+  return id != null && id == 0;
 }
