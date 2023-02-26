@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:gd/extensions/string_utils.dart';
+import 'package:gd/platform_version.dart';
 
 /// View-like class to print common information throughout the application.
 class CoreUi {
@@ -8,6 +9,10 @@ class CoreUi {
     stderr.writeln("${"[X]".red} Operating System (unimplemented)");
     stderr.writeln("    ${"·".blue} ${"There is currently no support for your Operating System.".bold}");
     stderr.writeln("    ${"·".blue} ${"Feel free to contribute at https://github.com/poirierlouis/godot_cli.".bold}");
+  }
+
+  void printCurrentVersion() {
+    print("godot-cli version $packageVersion");
   }
 
   void printAccessDenied() {

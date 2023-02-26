@@ -3,13 +3,16 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:gd/commands/runner.dart';
 import 'package:gd/platform_admin.dart';
-import 'package:gd/platform_version.dart';
 import 'package:gd/services/app_service.dart';
 import 'package:gd/ui/core_ui.dart';
 
 void main(List<String> arguments) async {
   final ui = CoreUi();
 
+  if (showVersion(arguments)) {
+    ui.printCurrentVersion();
+    return;
+  }
   try {
     if (!await isAdministrator()) {
       ui.printAccessDenied();
@@ -32,15 +35,11 @@ void main(List<String> arguments) async {
   }
 }
 
-/// Show version number of this tool when global option '--version' is parsed.
+/// Whether global option '--version' is parsed?
 ///
-/// Returns true when version number is showed.
+/// Returns true when version number has to be shown.
 bool showVersion(final List<String> arguments) {
   final version = arguments.firstWhere((arg) => arg == "--version", orElse: () => "");
 
-  if (version.isEmpty) {
-    return false;
-  }
-  print("godot-cli version $packageVersion");
-  return true;
+  return version.isNotEmpty;
 }
