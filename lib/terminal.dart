@@ -27,6 +27,8 @@ class Terminal {
   static String get previousLine => "\x1B[1F";
   static String get clearLine => "\x1B[2K";
 
+  static String get reset => "$showCursor$endAll";
+
   /// Clears [lines] from terminal, positioning the cursor at the beginning of the line.
   static void clearLines(final int lines) {
     String sequences = startOfLine;

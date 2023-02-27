@@ -4,6 +4,7 @@ import 'package:args/command_runner.dart';
 import 'package:gd/commands/runner.dart';
 import 'package:gd/platform_admin.dart';
 import 'package:gd/services/app_service.dart';
+import 'package:gd/terminal.dart';
 import 'package:gd/ui/core_ui.dart';
 
 void main(List<String> arguments) async {
@@ -16,23 +17,30 @@ void main(List<String> arguments) async {
   try {
     if (!await isAdministrator()) {
       ui.printAccessDenied();
-      exit(2);
+      abort(2);
     }
-    final configService = AppService.instance;
+    final app = AppService.instance;
     final runner = await createRunner(ui);
 
-    await configService.load();
+    await app.load();
     await runner.run(arguments);
   } on UnimplementedError {
     ui.printUnimplementedOperatingSystem();
-    exit(1);
+    abort(1);
   } on UsageException catch (error) {
     stderr.writeln(error);
-    exit(2);
+    abort(3);
   } catch (error) {
     stderr.writeln(error);
-    exit(3);
+    abort(4);
   }
+}
+
+/// Abort program with error [code] and reset terminal ANSI escape sequences.
+void abort(final int code) {
+  stdout.write(Terminal.reset);
+  stderr.write(Terminal.reset);
+  exit(code);
 }
 
 /// Whether global option '--version' is parsed?
