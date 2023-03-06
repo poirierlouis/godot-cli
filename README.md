@@ -2,7 +2,7 @@
 
 [![Version: 0.2.0](https://img.shields.io/github/v/release/poirierlouis/godot-cli?label=version&sort=semver)](https://github.com/poirierlouis/godot-cli/releases)
 [![License: MIT](https://img.shields.io/github/license/poirierlouis/godot-cli)](https://github.com/poirierlouis/godot-cli/blob/master/LICENSE)
-![Platform: windows](https://img.shields.io/badge/platform-windows-blue)
+![Platforms: windows | linux](https://img.shields.io/badge/platforms-windows%20|%20linux-blue)
 [![Donate](https://img.shields.io/badge/donate-buy%20me%20a%20coffee-yellow)](https://www.buymeacoffee.com/lpfreelance)
 
 A command line interface to setup your environment to work with Godot sources and GDExtensions.
