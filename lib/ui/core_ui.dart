@@ -8,7 +8,7 @@ class CoreUi {
   void printUnimplementedOperatingSystem() {
     stderr.writeln("${"[X]".red} Operating System (unimplemented)");
     stderr.writeln("    ${"·".blue} ${"There is currently no support for your Operating System.".bold}");
-    stderr.writeln("    ${"·".blue} ${"Feel free to contribute at https://github.com/poirierlouis/godot_cli.".bold}");
+    stderr.writeln("    ${"·".blue} ${"Feel free to contribute at https://github.com/poirierlouis/godot-cli.".bold}");
   }
 
   void printCurrentVersion() {
