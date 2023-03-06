@@ -1,6 +1,6 @@
 # Godot CLI
 
-[![Version: 0.1.2](https://img.shields.io/github/v/release/poirierlouis/godot-cli?label=version&sort=semver)](https://github.com/poirierlouis/godot-cli/releases)
+[![Version: 0.2.0](https://img.shields.io/github/v/release/poirierlouis/godot-cli?label=version&sort=semver)](https://github.com/poirierlouis/godot-cli/releases)
 [![License: MIT](https://img.shields.io/github/license/poirierlouis/godot-cli)](https://github.com/poirierlouis/godot-cli/blob/master/LICENSE)
 ![Platform: windows](https://img.shields.io/badge/platform-windows-blue)
 [![Donate](https://img.shields.io/badge/donate-buy%20me%20a%20coffee-yellow)](https://www.buymeacoffee.com/lpfreelance)
@@ -9,7 +9,7 @@ A command line interface to setup your environment to work with Godot sources an
 
 > Not production ready (alpha stage).
 > 
-> It has only been tested and implemented for Windows (macOS and Linux shall be supported later).
+> It has been tested and implemented on Windows and Linux (Ubuntu), macOS shall be supported later.
 > 
 > It is not endorsed nor supported by Godot.
 
@@ -28,7 +28,6 @@ provide a similar experience to improve and ease the creation of GDExtension wit
 - add detection to build on Android
 - add detection to build on iOS
 - add detection to build on Web
-- add support for Linux
 - add support for macOS
 - add tests
 
@@ -41,11 +40,12 @@ provide a similar experience to improve and ease the creation of GDExtension wit
 This tool stores data in:
 ```
 Windows: %APPDATA%\Roaming\gd-cli
+Linux: $HOME/.gd-cli
 ```
 
 ## Usage
 
-> Run commands in a terminal as Administrator / root.
+> Run the command 'doctor' as Administrator / root.
 
 Start with this command to setup your workspace:
 ```shell
@@ -88,6 +88,8 @@ $ gd help
 Show usage of this program with all commands you can use.
 
 ### doctor command
+
+> Need to be run as Administrator / root.
 
 ```shell
 $ gd doctor
