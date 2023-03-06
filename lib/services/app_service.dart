@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:gd/config.dart';
-import 'package:gd/platform_path.dart';
+import 'package:gd/platforms/platform_path.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 

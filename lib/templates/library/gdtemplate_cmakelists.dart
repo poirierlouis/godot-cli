@@ -1,4 +1,4 @@
-import 'package:gd/platform_flavor.dart';
+import 'package:gd/platforms/platform_flavor.dart';
 import 'package:gd/templates/gdtemplate_data.dart';
 import 'package:gd/templates/gdtemplate_file.dart';
 

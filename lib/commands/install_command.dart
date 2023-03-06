@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:args/args.dart';
 import 'package:gd/commands/guard_command.dart';
 import 'package:gd/extensions/string_utils.dart';
-import 'package:gd/platform_path.dart';
+import 'package:gd/platforms/platform_path.dart';
 import 'package:gd/services/git_service.dart';
 import 'package:gd/services/scons_service.dart';
 import 'package:gd/terminal.dart';
