@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - check on 'pip' installation to abort and prevent user when program is not found.
+- command 'doctor' on Linux to detect required tools (only GCC supported for now).
+- command 'config' on Linux to configure custom path instead of PATH environment variable.
 
 ### Fixed
 - terminal with a reset of ANSI escape sequences when aborting.
