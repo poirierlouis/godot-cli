@@ -102,6 +102,10 @@ class PythonService extends DetectService {
           Terminal.clearLines(1);
           ui.printDetected(version);
         }
+      } on ProgramNotFound {
+        Terminal.clearLines(1);
+        ui.printPipNotFound();
+        return false;
       } on PackageMissingSemVer {
         Terminal.clearLines(1);
         ui.printMissingSemVer();
@@ -143,6 +147,8 @@ class PythonService extends DetectService {
       final version = line.substring("Version: ".length).trim();
 
       return SemVer.parse(version);
+    } on ProgramNotFound {
+      rethrow;
     } on ProgramFailure {
       throw PackageNotFound();
     } catch (_) {

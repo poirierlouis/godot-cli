@@ -31,6 +31,11 @@ class PythonUi {
     return "$packageTitle (Installing)";
   }
 
+  void printPipNotFound() {
+    stderr.writeln("    ${"[X]".red} pip (Program not found)");
+    stderr.writeln("        ${"·".red} ${"Please install 'pip' manually.".bold}");
+  }
+
   void printInstallFailure(final PackageInstallFailure error) {
     stderr.writeln("    ${"[X]".red} $packageTitle (Installation failed)");
     stderr.writeln(error);

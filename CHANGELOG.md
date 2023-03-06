@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- check on 'pip' installation to abort and prevent user when program is not found.
+
 ### Fixed
 - terminal with a reset of ANSI escape sequences when aborting.
 
