@@ -24,7 +24,7 @@ String _getAppDataPath() {
   if (Platform.isMacOS) {
     return p.join(path, _appDataName);
   } else if (Platform.isLinux) {
-    return p.join(path, _appDataName);
+    return p.join(path, ".$_appDataName");
   } else if (Platform.isWindows) {
     return p.join(path, "AppData", "Roaming", _appDataName);
   }
