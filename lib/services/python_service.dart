@@ -40,14 +40,16 @@ class PythonService extends DetectService {
 
   PythonService._();
 
+  String pythonName = "python";
+
   @override
   String get executable {
     final path = app.getProgram("Python");
 
     if (path == null) {
-      return "python";
+      return pythonName;
     }
-    return p.join(path, "python");
+    return p.join(path, pythonName);
   }
 
   String get pip {
@@ -63,6 +65,18 @@ class PythonService extends DetectService {
   final SemVer? requiredVersion = SemVer(3, 6, 0);
 
   final PythonUi ui = PythonUi();
+
+  /// Whether [executable] is installed on user's system.
+  ///
+  /// Gets version number when it is installed, use [getVersion].
+  Future<void> isInstalled({final List<String> arguments = const ["--version"]}) async {
+    try {
+      await super.isInstalled(arguments: arguments);
+    } on ProgramNotFound catch (_) {
+      pythonName = "python3";
+      await super.isInstalled(arguments: arguments);
+    }
+  }
 
   @override
   Future<bool> delegate(final List<dynamic> data) async {
