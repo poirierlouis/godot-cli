@@ -28,6 +28,8 @@ provide a similar experience to improve and ease the creation of GDExtension wit
 - add detection to build on Android
 - add detection to build on iOS
 - add detection to build on Web
+- add alternative detection of MinGW on Windows.
+- add alternative detection of Clang on Linux.
 - add support for macOS
 - add tests
 
