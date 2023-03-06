@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - terminal with a reset of ANSI escape sequences when aborting.
 - check 'python' installation, trying 'python3' as a fallback when 'python' is not found.
+- elevated privileges required only when running command 'doctor'.
 
 ------------------------
 

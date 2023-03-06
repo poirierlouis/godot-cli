@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:gd/extensions/string_utils.dart';
+import 'package:gd/platform_admin.dart';
 import 'package:gd/platform_flavor.dart';
 import 'package:gd/services/app_service.dart';
 import 'package:gd/services/detect_service.dart';
@@ -53,6 +54,10 @@ abstract class DoctorCommand extends Command {
   @override
   Future<void> run() async {
     if (argResults == null) {
+      return;
+    }
+    if (!await isAdministrator()) {
+      ui.printAccessDenied();
       return;
     }
     final isFirstRun = app.config.isFirstRun;

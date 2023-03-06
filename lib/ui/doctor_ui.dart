@@ -17,6 +17,16 @@ class DoctorUi {
     _program = program;
   }
 
+  void printAccessDenied() {
+    String roleHint = "(as Administrator)";
+
+    if (Platform.isLinux || Platform.isMacOS) {
+      roleHint = "(as root)";
+    }
+    stderr.writeln("${"[X]".red} Access denied");
+    stderr.writeln("    ${"·".red} ${"You must run this command using elevated privileges $roleHint.".bold}");
+  }
+
   void printNotFound() {
     stderr.writeln("${"[X]".red} $programTitle (Program not found)");
   }

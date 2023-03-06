@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:gd/commands/runner.dart';
-import 'package:gd/platform_admin.dart';
 import 'package:gd/services/app_service.dart';
 import 'package:gd/terminal.dart';
 import 'package:gd/ui/core_ui.dart';
@@ -15,10 +14,6 @@ void main(List<String> arguments) async {
     return;
   }
   try {
-    if (!await isAdministrator()) {
-      ui.printAccessDenied();
-      abort(2);
-    }
     final app = AppService.instance;
     final runner = await createRunner(ui);
 
