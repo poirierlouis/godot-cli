@@ -1,8 +1,8 @@
 name: gd
 description: A command line interface to setup your environment to work with Godot sources and GDExtensions.
 version: 0.1.2
-repository: https://github.com/poirierlouis/godot_cli
-issue_tracker: https://github.com/poirierlouis/godot_cli/issues
+repository: https://github.com/poirierlouis/godot-cli
+issue_tracker: https://github.com/poirierlouis/godot-cli/issues
 funding: https://www.buymeacoffee.com/lpfreelance
 
 executables:
