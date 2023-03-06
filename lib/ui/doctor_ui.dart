@@ -52,21 +52,21 @@ class DoctorUi {
     print("${"[!]".yellow} Environment variable");
     print("    ${"·".yellow} ${"Instructions below allows you to work with Git when creating a GDExtension.".bold}");
     print("    ${"·".yellow} ${"Add following environment variable on your system:".bold}");
-    print("    ${"·".yellow} ${"GODOT_CLI_HOME: $appDataPath".bold}");
+    print("    ${"·".yellow} ${"$kHome: $appDataPath".bold}");
     print("    ${"·".yellow} ${"Make sure to re-run command 'doctor' after restarting your terminal / IDE.".bold}");
   }
 
   void printHomeEnvNotFound(final String appDataPath) {
     stderr.writeln("${"[X]".red} Missing environment variable");
     stderr.writeln("    ${"·".red} ${"Add following environment variable on your system:".bold}");
-    stderr.writeln("    ${"·".red} ${"GODOT_CLI_HOME: $appDataPath".bold}");
+    stderr.writeln("    ${"·".red} ${"$kHome: $appDataPath".bold}");
     stderr
         .writeln("    ${"·".red} ${"Make sure to re-run command 'doctor' after restarting your terminal / IDE.".bold}");
   }
 
   void printWrongHomeEnv(final String appDataPath) {
     stderr.writeln("${"[X]".red} Wrong environment variable");
-    stderr.writeln("    ${"·".red} ${"Value of GODOT_CLI_HOME must be:".bold}");
+    stderr.writeln("    ${"·".red} ${"Value of $kHome must be:".bold}");
     stderr.writeln("    ${"·".red} ${appDataPath.bold}");
   }
 
