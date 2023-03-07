@@ -11,4 +11,4 @@ fake/
 test-fake/
 
 # Generated using `build_runner`.
-lib/platform_version.dart
+lib/platforms/platform_version.dart

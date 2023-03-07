@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:gd/commands/doctor_command.dart';
 import 'package:gd/extensions/string_utils.dart';
-import 'package:gd/platform_flavor.dart';
+import 'package:gd/platforms/platform_flavor.dart';
 import 'package:gd/sem_ver.dart';
 
 /// View-like class to print common information about the status of a [DoctorProgram].

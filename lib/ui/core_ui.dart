@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:gd/extensions/string_utils.dart';
-import 'package:gd/platform_version.dart';
+import 'package:gd/platforms/platform_version.dart';
 
 /// View-like class to print common information throughout the application.
 class CoreUi {

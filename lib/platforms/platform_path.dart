@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:gd/platform_flavor.dart';
+import 'package:gd/platforms/platform_flavor.dart';
 import 'package:path/path.dart' as p;
 
 const String _appDataName = "gd-cli";
