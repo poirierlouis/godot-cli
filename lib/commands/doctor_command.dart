@@ -135,13 +135,13 @@ abstract class DoctorCommand extends Command {
     final home = Platform.environment[kHome];
 
     if (home == null) {
-      ui.printHomeEnvNotFound(appDataPath);
+      ui.printEnvVarNotFound(kHome, appDataPath);
       return false;
     } else if (home != appDataPath) {
       ui.printWrongHomeEnv(appDataPath);
       return false;
     }
-    ui.printHomeEnvDetected(appDataPath);
+    ui.printEnvVarDetected(kHome);
     return true;
   }
 }

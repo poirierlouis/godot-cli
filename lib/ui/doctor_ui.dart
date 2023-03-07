@@ -68,10 +68,10 @@ class DoctorUi {
     print("    ${"·".yellow} ${"Make sure to re-run command 'doctor' after restarting your terminal / IDE.".bold}");
   }
 
-  void printHomeEnvNotFound(final String appDataPath) {
+  void printEnvVarNotFound(final String name, final String hint) {
     stderr.writeln("${"[X]".red} Missing environment variable");
     stderr.writeln("    ${"·".red} ${"Add following environment variable on your system:".bold}");
-    stderr.writeln("    ${"·".red} ${"$kHome: $appDataPath".bold}");
+    stderr.writeln("    ${"·".red} ${"$name: $hint".bold}");
     stderr
         .writeln("    ${"·".red} ${"Make sure to re-run command 'doctor' after restarting your terminal / IDE.".bold}");
   }
@@ -82,7 +82,7 @@ class DoctorUi {
     stderr.writeln("    ${"·".red} ${appDataPath.bold}");
   }
 
-  void printHomeEnvDetected(final String appDataPath) {
-    print("${"[√]".green} Environment variable ($kHome)");
+  void printEnvVarDetected(final String name) {
+    print("${"[√]".green} Environment variable ($name)");
   }
 }
