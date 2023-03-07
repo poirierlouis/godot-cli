@@ -72,7 +72,7 @@ abstract class DoctorCommand extends Command {
         issues++;
       }
     }
-    if (!await detectHomeEnvironment(isFirstRun)) {
+    if (!detectHomeEnvironment(isFirstRun)) {
       issues++;
     }
     await app.setIssues(issues);
@@ -125,7 +125,7 @@ abstract class DoctorCommand extends Command {
   /// Returns true when environment variable is detected and well-configured.
   ///
   /// Prints logs depending on detection result.
-  Future<bool> detectHomeEnvironment(final bool isFirstRun) async {
+  bool detectHomeEnvironment(final bool isFirstRun) {
     final appDataPath = app.appData.path;
 
     if (isFirstRun) {
