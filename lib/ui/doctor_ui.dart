@@ -10,7 +10,9 @@ class DoctorUi {
   DoctorProgram? _program;
 
   String get programTitle => _program?.programTitle ?? "<unknown>";
+
   String get installUrl => _program?.installUrl ?? "";
+
   List<String> get installHelp => _program?.installHelp ?? [];
 
   void withProgram(final DoctorProgram program) {

@@ -7,9 +7,11 @@ import 'package:gd/services/program_service.dart';
 /// Abstract service layer to detect a program is installed and well-configured.
 abstract class DetectService {
   AppService get app => AppService.instance;
+
   ProgramService get program => ProgramService.instance;
 
   String get executable;
+
   SemVer? get requiredVersion => null;
 
   /// Gets [SemVer] number of [executable], after [isInstalled] succeeded.

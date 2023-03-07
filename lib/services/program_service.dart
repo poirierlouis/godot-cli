@@ -21,6 +21,7 @@ class ProgramFailure extends ProgramError {
 
 class ProgramService {
   static ProgramService get instance => _instance;
+
   @visibleForTesting
   static set instance(ProgramService value) => _instance = value;
 
