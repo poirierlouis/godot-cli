@@ -58,14 +58,19 @@ class ProgramService {
     }
   }
 
-  /// Starts [executable] with [arguments], optionally from [workingDirectory].
+  /// Starts [executable] with [arguments], optionally from [workingDirectory] and with a custom start [mode].
   ///
   /// Returns a [Process] to interact with, when it has been successfully started.
   ///
   /// Throws a [ProgramNotFound] when [executable] is not found.
-  Future<Process> start(final String executable, final List<String> arguments, {final String? workingDirectory}) async {
+  Future<Process> start(
+    final String executable,
+    final List<String> arguments, {
+    final String? workingDirectory,
+    final ProcessStartMode mode = ProcessStartMode.normal,
+  }) async {
     try {
-      return await Process.start(executable, arguments, workingDirectory: workingDirectory);
+      return await Process.start(executable, arguments, workingDirectory: workingDirectory, mode: mode);
     } catch (error) {
       throw ProgramNotFound();
     }
