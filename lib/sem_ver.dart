@@ -2,7 +2,7 @@
 ///
 /// Use [SemVer.parse] to create a [SemVer] using a [String] with format "X.Y.Z".
 class SemVer {
-  static final regexp = RegExp(r"[0-9]+\.[0-9]+\.[0-9]+");
+  static final regexp = RegExp(r"[0-9]+(\.[0-9]+(\.[0-9]+)?)?");
 
   const SemVer(this.major, [this.minor = 0, this.patch = 0]);
 
